@@ -12,14 +12,14 @@ function string.split(s, delimiter)
     return result;
 end
 
-engine_events['pfnClientCommand'] = function (E, args, text)
-    if cmd.client_commands[args[1]] then return cmd.client_commands[args[1]][2](E, args, text) end
-    if args[2] then
+engine_callback.register('pfnClientCommand', function (E, args, text)
+    if cmd.client_commands[args[1]] then cmd.client_commands[args[1]][2](E, args, text) end
+    if args[1] == "say" then
         local chat_args = string.split(args[2], ' ');
         if cmd.chat_commands[chat_args[1]] then return cmd.chat_commands[chat_args[1]][2](E, chat_args, text) end
     end
-end
+end)
 
-engine_events['pfnServerCommand'] = function (E, args, text)
+engine_callback.register('pfnServerCommand', function (E, args, text)
     return cmd.server_commands[args[1]] and cmd.server_commands[args[1]][2](E, args, text);
-end
+end)
