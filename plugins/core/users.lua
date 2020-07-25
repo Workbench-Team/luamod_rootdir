@@ -45,7 +45,7 @@ function users.user.push(E)
 
 	if users.auth_need(E) == true then
 		local privilege = try_authentication(E)
-		if privilege == nil then server_command(string.format('kick #%i "%s"', get_player_userid(E), authentication_failed_msg)) end
+		if privilege == nil then server_command(string.format('kick #%i "%s"', get_player_userid(E), authentication_failed_msg)) return end
 		table.insert(users.users_list, {edict = E, name = get_entity_keyvalue(E, "name"), authid = get_player_authid(E), ip = get_entity_keyvalue(E, "ip"), on_server = false, auth = true, privilege = privilege})
 	else
 		table.insert(users.users_list, {edict = E, name = get_entity_keyvalue(E, "name"), authid = get_player_authid(E), ip = get_entity_keyvalue(E, "ip"), on_server = false, auth = false})
