@@ -1,13 +1,7 @@
 local ffi = require("ffi")
 
 ffi.cdef[[
-typedef float vec_t;
-typedef vec_t vec3_t[3];
-typedef int string_t;
-typedef unsigned char byte;
-typedef struct edict_s edict_t;
 typedef enum { false, true }	qboolean;
-
 enum META_RES
 {
         MRES_UNSET = 0,
@@ -25,9 +19,10 @@ struct meta_globals_t
         void *orig_ret;         // readable; return value from "real" function
         void *override_ret;     // readable; return value from overriding/superceding plugin
 };
-
 ]]
 
+--[[
 return { to = function (E) return ffi.cast("edict_t *", E) end,
 is = function (E) return ffi.istype("edict_t *", E)
 end }
+]]--
