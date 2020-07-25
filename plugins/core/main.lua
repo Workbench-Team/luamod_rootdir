@@ -3,11 +3,11 @@ local plugin_id = { author = "Mr0maks", name = "Core", version = "0.0.1", descri
 print(string.format("[LuaMod] CORE by Mr0maks ver %s starting on luamod version %s", plugin_id.version, LUAMOD_VERSION))
 
 CORE_PATH = string.format("%s/addons/luamod/plugins/core", MOD_PATH)
-INCLUDE_PATH = string.format("%s/include", CORE_PATH)
+PACKAGE_PATH = string.format("%s/package", CORE_PATH)
 PLUGINS_PATH = string.format("%s/plugins", CORE_PATH)
 LOGS_PATH = string.format("%s/logs", CORE_PATH)
 
-package.path = string.format("%s/?.lua;%s/?/init.lua;", INCLUDE_PATH, INCLUDE_PATH)
+package.path = string.format("%s/?.lua;%s/?/init.lua;", PACKAGE_PATH, PACKAGE_PATH)
 
 dofile(CORE_PATH.."/log.lua")
 dofile(INCLUDE_PATH.."/edict.lua")
