@@ -215,9 +215,6 @@ struct meta_globals_t
 
 ]]
 
-edict = {to = function (E)
-local edict = ffi.cast("edict_t *", E)
-return edict
-end, is = function (edict)
-return ffi.istype("edict_t *", edict)
-end}
+return { to = function (E) return ffi.cast("edict_t *", E) end,
+is = function (E) return ffi.istype("edict_t *", E)
+end }

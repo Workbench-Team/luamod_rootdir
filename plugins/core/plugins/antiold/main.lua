@@ -1,5 +1,3 @@
-include 'log.lua'
-
 plugin.register("Mr0maks", "Antiold", "no version", "kick 0.19.1 and older xash3d version")
 
 engine_callback.register("pfnCvarValue2", function (E, id, cvar_name, cvar_value)
