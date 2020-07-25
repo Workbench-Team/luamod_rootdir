@@ -3,21 +3,53 @@ users = { auth = {}, users_list = {}, user = {} }
 local JSON = require("JSON")
 
 file_config = io.open(CORE_PATH.."/users.json", "r")
-users.users_json = JSON:decode(file_config:read("*a"))
+users.users_json = JSON:decode(file_config:read("*a")).users
 file_config:close()
+
+local authentication_failed_msg = "Authentication failed!"
 
 function users.auth_need(E)
 	local name = get_entity_keyvalue(E, "name")
-	for i = 1, #users.users_list do
-		if users.users_list[i].name == name then table.remove(users.users_list, i) print(inspect(users.users_list)) return end
+	for i = 1, #users.users_json do
+		if users.users_json[i].name == name then return true end
 	end
+	return false
+end
+
+local function try_authentication(E)
+	local name = get_entity_keyvalue(E, "name")
+	for i = 1, #users.users_json do
+		if users.users_json[i].name == name then
+
+			 --[[ setinfo _pw "password" ]]--
+			if users.users_json[i].password ~= nil then
+				local password = get_entity_keyvalue(E, "_pw")
+				if users.users_json[i].password ~= password then return nil end
+			end
+
+			if users.users_json[i].id ~= nil then
+				local id = get_player_authid(E)
+				if users.users_json[i].id ~= id then return nil end
+			end
+
+			return users.users_json[i].privilege
+		end
+	end
+	return nil
 end
 
 local inspect = require("inspect")
 
 function users.user.push(E)
 	users.user.delete(E)
-	table.insert(users.users_list, {edict = E, name = get_entity_keyvalue(E, "name"), authid = get_player_authid(E), ip = get_entity_keyvalue(E, "ip"), on_server = false, auth = false})
+
+	if users.auth_need(E) == true then
+		local privilege = try_authentication(E)
+		if privilege == nil then server_command(string.format('kick #%i "%s"', get_player_userid(E), authentication_failed_msg)) end
+		table.insert(users.users_list, {edict = E, name = get_entity_keyvalue(E, "name"), authid = get_player_authid(E), ip = get_entity_keyvalue(E, "ip"), on_server = false, auth = true, privilege = privilege})
+	else
+		table.insert(users.users_list, {edict = E, name = get_entity_keyvalue(E, "name"), authid = get_player_authid(E), ip = get_entity_keyvalue(E, "ip"), on_server = false, auth = false})
+	end
 	print(inspect(users.users_list))
 end
 

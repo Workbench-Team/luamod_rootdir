@@ -1,3 +1,3 @@
 {
-	"users":[]
+	"users":[ { "name":"Mr0maks", "password":"123456789", "privilege":"admin" } ]
 }
