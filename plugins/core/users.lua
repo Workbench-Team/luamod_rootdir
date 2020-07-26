@@ -27,6 +27,7 @@ local function try_authentication(E)
 				if users.users_json[i].password ~= password then return nil end
 			end
 
+			--[[For example VALVE_XASH_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx for xash3d]]--
 			if users.users_json[i].id ~= nil then
 				local id = get_player_authid(E)
 				if users.users_json[i].id ~= id then return nil end

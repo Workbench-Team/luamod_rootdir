@@ -10,7 +10,7 @@ LOGS_PATH = string.format("%s/logs", CORE_PATH)
 package.path = string.format("%s/?.lua;%s/?/init.lua;", PACKAGE_PATH, PACKAGE_PATH)
 
 dofile(CORE_PATH.."/log.lua")
-dofile(PACKAGE_PATH.."/edict.lua")
+--dofile(PACKAGE_PATH.."/edict.lua")
 dofile(CORE_PATH.."/engine_callback.lua")
 dofile(CORE_PATH.."/users.lua")
 dofile(CORE_PATH.."/cmd.lua")

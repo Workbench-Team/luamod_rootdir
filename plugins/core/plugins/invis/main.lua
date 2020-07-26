@@ -1,18 +1,17 @@
 plugin.register("Mr0maks", "invis", "0.0.1", "invisible admin")
 
 local privilege = require("privilege")
+local edict = require("edict")
 
-local say_text = reg_user_msg("SayText", -1)
-
-local function print_chat(E, string_msg)
-	message_begin(2, say_text, { 0, 0, 0 }, 0)
-	write_byte(index_of_edict(E));
-	write_string(string_msg);
-	message_end();
-
-	print(string_msg)
-end
-
-cmd.setChatCommand("invis", function (E, argv, args)
-	print("Privilage of invis caller: "..privilege.get(E))
+cmd.setClientCommand("invis", function (E, argv, args)
+	if privilege.get(E) == "admin" then
+		local e = edict.to(E)
+		if e.v.rendermode == 5 then
+			client_printf(E, 1, '[invis] invis disabled\n');
+			e.v.rendermode = 0
+		else
+			client_printf(E, 1, '[invis] invis enabled\n');
+			e.v.rendermode = 5
+		end
+	end
 end)
