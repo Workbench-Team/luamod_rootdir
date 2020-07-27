@@ -21,16 +21,37 @@ local function try_authentication(E)
 	for i = 1, #users.users_json do
 		if users.users_json[i].name == name then
 
+			--[[ 0.0.0.0 - 255.255.255.255 ]]--
+			if users.users_json[i].ip ~= nil then
+				local ip = ""
+
+				for i = 1, #users.users_list do
+					if users.users_list[i].name == name then
+						ip = users.users_list[i].ip
+					end
+				end
+
+				if users.users_json[i].ip ~= ip then
+					server_command(string.format('kick #%i "%s"', get_player_userid(E), authentication_failed_msg))
+					return nil
+				end
+			end
+
 			 --[[ setinfo _pw "password" ]]--
 			if users.users_json[i].password ~= nil then
 				local password = get_entity_keyvalue(E, "_pw")
-				if users.users_json[i].password ~= password then return nil end
+				if users.users_json[i].password ~= password then
+					server_command(string.format('kick #%i "%s"', get_player_userid(E), authentication_failed_msg))
+					return nil
+				end
 			end
 
 			--[[For example VALVE_XASH_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx for xash3d]]--
 			if users.users_json[i].id ~= nil then
 				local id = get_player_authid(E)
-				if users.users_json[i].id ~= id then return nil end
+				if users.users_json[i].id ~= id then server_command(string.format('kick #%i "%s"', get_player_userid(E), authentication_failed_msg))
+					return nil
+				end
 			end
 
 			return users.users_json[i].privilege
@@ -43,29 +64,42 @@ local inspect = require("inspect")
 
 function users.user.push(E)
 	users.user.delete(E)
+	local ip = get_entity_keyvalue(E, "ip"):match("(%d+.%d+.%d+.%d+)")
 
-	if users.auth_need(E) == true then
-		local privilege = try_authentication(E)
-		if privilege == nil then server_command(string.format('kick #%i "%s"', get_player_userid(E), authentication_failed_msg)) return end
-		table.insert(users.users_list, {edict = E, name = get_entity_keyvalue(E, "name"), authid = get_player_authid(E), ip = get_entity_keyvalue(E, "ip"), on_server = false, auth = true, privilege = privilege})
-	else
-		table.insert(users.users_list, {edict = E, name = get_entity_keyvalue(E, "name"), authid = get_player_authid(E), ip = get_entity_keyvalue(E, "ip"), on_server = false, auth = false})
-	end
+	table.insert(users.users_list, {edict = E, name = get_entity_keyvalue(E, "name"), authid = get_player_authid(E), ip = ip, on_server = false, auth = false})
 	print(inspect(users.users_list))
 end
 
 function users.user.delete(E)
 	local name = get_entity_keyvalue(E, "name")
 	for i = 1, #users.users_list do
-		if users.users_list[i].name == name then table.remove(users.users_list, i) print(inspect(users.users_list)) return end
+		if users.users_list[i].name == name then
+			table.remove(users.users_list, i)
+		end
 	end
+	print(inspect(users.users_list))
 end
 
 function users.user.on_server(E)
 	local name = get_entity_keyvalue(E, "name")
-	for i = 1, #users.users_list do
-		if users.users_list[i].name == name then users.users_list[i].on_server = true print(inspect(users.users_list)) return end
+	if users.auth_need(E) == true then
+		local privilege = try_authentication(E)
+		-- player kicked from server
+		if privilege == nil then return end
+
+		for i = 1, #users.users_list do
+			if users.users_list[i].name == name then
+				users.users_list[i].privilege = privilege
+				users.users_list[i].auth = true
+				return
+			end
+		end
 	end
+
+	for i = 1, #users.users_list do
+		if users.users_list[i].name == name then users.users_list[i].on_server = true end
+	end
+	print(inspect(users.users_list))
 end
 
 function users.auth(E, player_name)
