@@ -12,6 +12,7 @@ package.path = string.format("%s/?.lua;%s/?/init.lua;", PACKAGE_PATH, PACKAGE_PA
 dofile(CORE_PATH.."/log.lua")
 --dofile(PACKAGE_PATH.."/edict.lua")
 dofile(CORE_PATH.."/engine_callback.lua")
+dofile(CORE_PATH.."/taskmgr.lua")
 dofile(CORE_PATH.."/users.lua")
 dofile(CORE_PATH.."/cmd.lua")
 dofile(CORE_PATH.."/plugin.lua")
