@@ -1,6 +1,11 @@
 local ffi = require("ffi")
 
 ffi.cdef[[
+typedef float vec_t;
+typedef vec_t vec3_t[3];
+typedef int string_t;
+typedef struct edict_s edict_t;
+
 typedef struct {
 	float 	time;
 	float 	frametime;
