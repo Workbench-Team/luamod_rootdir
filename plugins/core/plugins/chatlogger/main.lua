@@ -1,6 +1,6 @@
 plugin.register("Professor Brain", "Chat Logger", "no version", "Logging chat messages to file")
 
-cmd.add("client", "say", function (E, table, args)
+cmd.register("client", "say", function (E, table, args)
 	local name = get_entity_keyvalue(E, "name")
 	local id = engine.get_player_authid(E)
 	local time = os.date("*t")

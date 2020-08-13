@@ -3,7 +3,7 @@ plugin.register("Mr0maks", "invis", "0.0.1", "invisible admin")
 local privilege = require("privilege")
 local edict = require("edict")
 
-cmd.add("client", "invis", function (E, argv, args)
+cmd.register("client", "invis", function (E, argv, args)
 	if privilege.get(E) == "admin" then
 		local e = edict.to(E)
 		if e.v.rendermode == 5 then

@@ -3,7 +3,7 @@ plugin.register("Mr0maks", "noclip", "0.0.1", "noclip for admin")
 local privilege = require("privilege")
 local edict = require("edict")
 
-cmd.add("client", "lm_noclip", function (E, argv, args)
+cmd.register("client", "lm_noclip", function (E, argv, args)
 	if privilege.get(E) == "admin" then
 		local e = edict.to(E)
 		if e.v.movetype == 8 then

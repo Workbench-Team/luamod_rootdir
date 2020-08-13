@@ -1,7 +1,6 @@
 cmd = { client_commands = { }, server_commands = { }, chat_commands = { }  };
 
 function cmd.register(type, command, handler)
-    if type ~= "client" or type ~= "server" or ~= "chat" then error("invalid type") return end
     cmd[type.."_commands"][command] = {command, handler}
 end
 
