@@ -32,7 +32,7 @@ local function try_authentication(E)
 				end
 
 				if users.users_json[i].ip ~= ip then
-					server_command(string.format('kick #%i "%s"', get_player_userid(E), authentication_failed_msg))
+					engine.server_command(string.format('kick #%i "%s"', engine.get_player_userid(E), authentication_failed_msg))
 					return nil
 				end
 			end
@@ -41,7 +41,7 @@ local function try_authentication(E)
 			if users.users_json[i].password ~= nil then
 				local password = get_entity_keyvalue(E, "_pw")
 				if users.users_json[i].password ~= password then
-					server_command(string.format('kick #%i "%s"', get_player_userid(E), authentication_failed_msg))
+					engine.server_command(string.format('kick #%i "%s"', engine.get_player_userid(E), authentication_failed_msg))
 					return nil
 				end
 			end
@@ -49,7 +49,8 @@ local function try_authentication(E)
 			--[[For example VALVE_XASH_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx for xash3d]]--
 			if users.users_json[i].id ~= nil then
 				local id = get_player_authid(E)
-				if users.users_json[i].id ~= id then server_command(string.format('kick #%i "%s"', get_player_userid(E), authentication_failed_msg))
+				if users.users_json[i].id ~= id then
+					engine.server_command(string.format('kick #%i "%s"', engine.get_player_userid(E), authentication_failed_msg))
 					return nil
 				end
 			end
@@ -66,7 +67,7 @@ function users.user.push(E)
 	users.user.delete(E)
 	local ip = get_entity_keyvalue(E, "ip"):match("(%d+.%d+.%d+.%d+)")
 
-	table.insert(users.users_list, {edict = E, name = get_entity_keyvalue(E, "name"), authid = get_player_authid(E), ip = ip, on_server = false, auth = false})
+	table.insert(users.users_list, {edict = E, name = get_entity_keyvalue(E, "name"), authid = engine.get_player_authid(E), ip = ip, on_server = false, auth = false})
 	print(inspect(users.users_list))
 end
 
