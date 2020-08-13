@@ -16,7 +16,7 @@ local admin = (privilege.get(E) == "admin")
 
 for i = 1, #admin_models do
 	if admin_models[i] == model then
-		if not admin then client_command(E, string.format("model %s", default_model)) end
+		if not admin then engine.client_command(E, string.format("model %s", default_model)) end
 	end
 end
 

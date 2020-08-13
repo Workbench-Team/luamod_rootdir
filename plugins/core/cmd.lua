@@ -1,8 +1,9 @@
 cmd = { client_commands = { }, server_commands = { }, chat_commands = { }  };
 
-function cmd.setClientCommand(command, handler) cmd.client_commands[command] = { command, handler } end
-function cmd.setServerCommand(command, handler) cmd.server_commands[command] = { command, handler } end
-function cmd.setChatCommand  (command, handler) cmd.chat_commands  [command] = { command, handler } end
+function cmd.register(type, command, handler)
+    if type ~= "client" or type ~= "server" or ~= "chat" then error("invalid type") return end
+    cmd[type.."_commands"][command] = {command, handler}
+end
 
 function string.split(s, delimiter)
     result = {};

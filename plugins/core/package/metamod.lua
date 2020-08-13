@@ -1,7 +1,6 @@
 local ffi = require("ffi")
 
 ffi.cdef[[
-typedef enum { false, true }	qboolean;
 enum META_RES
 {
         MRES_UNSET = 0,
@@ -21,8 +20,4 @@ struct meta_globals_t
 };
 ]]
 
---[[
-return { to = function (E) return ffi.cast("edict_t *", E) end,
-is = function (E) return ffi.istype("edict_t *", E)
-end }
-]]--
+return ffi.cast("meta_globals_t *", METAMOD_GLOBALS)

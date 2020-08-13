@@ -1,7 +1,5 @@
-plugin.register("Mr0maks", "helloworld", "no version", "helloworld plugin")
+plugin.register("Mr0maks", "helloworld", "no version", "helloworld")
 
-local inspect = require("inspect")
-
-cmd.setChatCommand("hello", function (E)
-	print("Hello World luamod!")
+cmd.add("chat", "hello", function (E)
+	print("Hello World!")
 end)
