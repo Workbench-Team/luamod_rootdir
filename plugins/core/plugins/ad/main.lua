@@ -1,6 +1,6 @@
 plugin.register("Mr0maks", "Lumod Ad", "0.0.1", "Simple plugin to show luamod ad on server")
 
-local gmsgHudText = reg_user_msg("HudText", -1);
+local gmsgHudText = engine.reg_user_msg("HudText", -1);
 
 local function advert_task()
 	engine.message_begin(0, gmsgHudText, {0,0,0}, nil)
