@@ -20,4 +20,4 @@ struct meta_globals_t
 };
 ]]
 
-return ffi.cast("meta_globals_t *", METAMOD_GLOBALS)
+return ffi.cast("struct meta_globals_t *", METAMOD_GLOBALS)

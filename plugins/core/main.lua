@@ -30,9 +30,9 @@ local inspect = require("inspect")
 
 for i = 1,#config.plugins do
 	local func, err = loadfile(PLUGINS_PATH.."/"..config.plugins[i].."/main.lua")
-	if func == nil then print(string.format("[LuaMod] CORE: Plugin %s Failed to load with error %s", config.plugins[i], err)) end
+	if func == nil then print(string.format("[LuaMod] CORE: Plugin %s Failed to load with error: %s", config.plugins[i], err)) end
 	local ok, result = pcall(func)
-	if ok == false then print(string.format("[LuaMod] CORE: Plugin %s Failed to load with error %s", config.plugins[i], result)) end
+	if ok == false then print(string.format("[LuaMod] CORE: Plugin %s Failed to load with error: %s", config.plugins[i], result)) end
 end
 
 register_plugin(plugin_id.author, plugin_id.name, plugin_id.version, plugin_id.description)
