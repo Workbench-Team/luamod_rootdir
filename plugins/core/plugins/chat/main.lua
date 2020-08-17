@@ -4,6 +4,8 @@ if MOD_PATH == "cstrike" then
 	error("plugin not working with CS 1.6")
 end
 
+local meta_global = require("metamod")
+
 local say_text = engine.reg_user_msg("SayText", -1);
 
 cmd.register("client", "say", function (executor, args, split_args)
@@ -16,6 +18,9 @@ cmd.register("client", "say", function (executor, args, split_args)
 		engine.write_string(string_msg);
 		engine.message_end();
 	end
+
+	--[[Hook original Host_Say]]--
+	meta_global.mres = metamod.MRES_SUPERCEDE
 
 	print(string_msg)
 end)
