@@ -14,6 +14,9 @@ local say_text = engine.reg_user_msg("SayText", -1);
 local player_next_chat_message = {}
 
 cmd.register("client", "say", function (executor, args, split_args)
+	--[[Hook original Host_Say]]--
+	meta_global.mres = metamod.MRES_SUPERCEDE
+
 	local name = get_entity_keyvalue(executor, 'name');
 
 	if player_next_chat_message[name] > globalvars.time then
@@ -31,18 +34,15 @@ cmd.register("client", "say", function (executor, args, split_args)
 		engine.message_end();
 	end
 
-	--[[Hook original Host_Say]]--
-	meta_global.mres = metamod.MRES_SUPERCEDE
-
 	print(string_msg)
 end)
 
 engine_callback.register('pfnClientPutInServer', function (E)
-	local name = get_entity_keyvalue(executor, 'name');
+	local name = get_entity_keyvalue(E, 'name');
 	player_next_chat_message[name] = 0
 end)
 
 engine_callback.register('pfnClientDisconnect', function (E)
-	local name = get_entity_keyvalue(executor, 'name');
+	local name = get_entity_keyvalue(E, 'name');
 	player_next_chat_message[name] = nil
 end)
