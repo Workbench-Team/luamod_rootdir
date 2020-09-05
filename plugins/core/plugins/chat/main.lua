@@ -43,7 +43,7 @@ end)
 cmd.register("client", "say_team", function (executor, args, split_args)
 	--[[Hook original Host_Say]]--
 	meta_global.mres = metamod.MRES_SUPERCEDE
-end
+end)
 
 engine_callback.register('pfnClientPutInServer', function (E)
 	local name = get_entity_keyvalue(E, 'name');
