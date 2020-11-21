@@ -1,0 +1,5 @@
+{
+    "entities":["weaponbox", "monster_satchel", "monster_tripmine"],
+    "count":100,
+    "time":20,
+}

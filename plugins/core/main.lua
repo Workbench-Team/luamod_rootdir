@@ -9,7 +9,6 @@ LOGS_PATH = string.format("%s/logs", CORE_PATH)
 
 package.path = string.format("%s/?.lua;%s/?/init.lua;", PACKAGE_PATH, PACKAGE_PATH)
 
-dofile(CORE_PATH.."/log.lua")
 dofile(CORE_PATH.."/metamod.lua")
 --dofile(PACKAGE_PATH.."/edict.lua")
 dofile(CORE_PATH.."/engine_callback.lua")
@@ -28,11 +27,9 @@ file_config:close()
 
 local inspect = require("inspect")
 
-for i = 1,#config.plugins do
-	local func, err = loadfile(PLUGINS_PATH.."/"..config.plugins[i].."/main.lua")
-	if func == nil then print(string.format("[LuaMod] CORE: Plugin %s Failed to load with error: %s", config.plugins[i], err)) end
-	local ok, result = pcall(func)
-	if ok == false then print(string.format("[LuaMod] CORE: Plugin %s Failed to load with error: %s", config.plugins[i], result)) end
+for i,v in ipairs(config.plugins) do
+	local err = dofile(PLUGINS_PATH.."/"..v.."/main.lua")
+	if err ~= nil then print(string.format("[LuaMod] CORE: Plugin %s Failed to load with error: %s", v, err)) end
 end
 
 register_plugin(plugin_id.author, plugin_id.name, plugin_id.version, plugin_id.description)

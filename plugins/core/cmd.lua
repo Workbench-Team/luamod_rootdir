@@ -20,6 +20,6 @@ engine_callback.register('pfnClientCommand', function (E, args, text)
     end
 end)
 
-engine_callback.register('pfnServerCommand', function (E, args, text)
-    return cmd.server_commands[args[1]] and cmd.server_commands[args[1]][2](E, args, text);
+engine_callback.register('pfnServerCommand', function (args, text)
+    return cmd.server_commands[args[1]] and cmd.server_commands[args[1]][2](args, text);
 end)

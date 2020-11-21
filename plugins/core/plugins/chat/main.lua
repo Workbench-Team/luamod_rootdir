@@ -30,12 +30,10 @@ cmd.register("client", "say", function (executor, args, split_args)
 
 	local string_msg = string.format("%c[%s] %s: %s\n", 2, os.date("%X"), name, string.gsub(split_args, '"', ''));
 
-	if MOD_PATH ~= "cstrike" then
-		engine.message_begin(2, say_text, { 0, 0, 0 }, 0)
-		engine.write_byte(engine.index_of_edict(executor));
-		engine.write_string(string_msg);
-		engine.message_end();
-	end
+	engine.message_begin(2, say_text, { 0, 0, 0 }, 0)
+	engine.write_byte(engine.index_of_edict(executor));
+	engine.write_string(string_msg);
+	engine.message_end();
 
 	print(string_msg)
 end)

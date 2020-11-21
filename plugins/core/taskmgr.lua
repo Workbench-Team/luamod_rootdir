@@ -19,7 +19,7 @@ function task.pause( seconds )
 end
 
 function task.remove(id)
-	for i = 1,#tasks do
+	for i,v in ipairs(tasks) do
 		if id == tasks[i].id then
 			table.remove(tasks, i)
 			return
@@ -40,7 +40,7 @@ engine_callback.register("pfnStartFrame", function()
 
 	local tasks_remove = {}
 
-	for i = 1,#tasks do
+	for i,v in ipairs(tasks) do
 		if tasks[i].repeat_count ~= 0 then
 			-- Resume coroutine after suspend --
 			if tasks[i].coroutine ~= nil then
@@ -70,7 +70,7 @@ engine_callback.register("pfnStartFrame", function()
 	end
 
 	-- collect garbage --
-	for i = 1,#tasks_remove do
+	for i,v in ipairs(tasks) do
 		task.remove(tasks_remove[i])
 	end
 end)
@@ -88,9 +88,3 @@ function task.add(time, callback, repeat_count)
 	table.insert(tasks, {id = id, time = time, cb = callback, repeat_count = repeat_count})
 	return id
 end
-
---[[
-task.add(1, function ()
-        print("Every 1 sec?")
-end, -1)
-]]--
