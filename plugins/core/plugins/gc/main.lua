@@ -26,7 +26,7 @@ function garbage.collect()
 		end
 	end
 
-	if #garbage_table > garbage.count_to_collect or #garbage_table == garbage.count_to_collect then
+	if #garbage_table >= garbage.count_to_collect then
 		for v in pairs(garbage_table) do
 			engine.remove_entity(v)
 		end

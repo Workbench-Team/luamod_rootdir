@@ -3,7 +3,7 @@ plugin.register("Mr0maks", "Lumod Ad", "0.0.1", "Simple plugin to show luamod ad
 local gmsgHudText = engine.reg_user_msg("HudText", -1);
 
 local function advert_task()
-	engine.message_begin(0, gmsgHudText, {0,0,0}, nil)
+	engine.message_begin(0, gmsgHudText, nil, nil)
 	engine.write_string(string.format("This server is using LuaMod version %s", LUAMOD_VERSION))
 	engine.message_end()
 end
