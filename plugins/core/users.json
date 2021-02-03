@@ -1,3 +1,8 @@
 {
-	"users":[ { "name":"Mr0maks", "privilege":"admin", "method":"password", "password":"123456789" } ]
+	"users": [
+		{ "name":"Mr0maks", "privilege":"admin", "method":"ip", "ip":"5.165.0.34", "password":"123456789" },
+		{ "name":"^2[Coffin Squad] ^5Aru ^4Moon", "privilege": "admin", "method": "authid", "authid":"VALVE_XASH_5e585a72c6b43242333a4cddb150b150"},
+		{ "name": "^5Aru ^4Moon", "privilege": "admin", "method": "authid", "authid": "VALVE_XASH_c6fb4a612e8ada179b1bba80d46cacb3" },
+		{ "name": "^2Troll338cz", "privilege": "admin", "method":"ip", "ip":"89.102.164.67" }
+	]
 }
