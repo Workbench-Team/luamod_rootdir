@@ -75,7 +75,7 @@ engine_callback.register('pfnClientConnect', function (E)
 			auth = false
 		}
 		)
-	print(inspect(users.users_table))
+--	print(inspect(users.users_table))
 end)
 
 engine_callback.register('pfnClientDisconnect', function (E)
@@ -85,7 +85,7 @@ engine_callback.register('pfnClientDisconnect', function (E)
 			table.remove(users.users_table, i)
 		end
 	end
-	print(inspect(users.users_table))
+--	print(inspect(users.users_table))
 end)
 
 engine_callback.register('pfnClientPutInServer', function (E)
@@ -112,5 +112,5 @@ engine_callback.register('pfnClientPutInServer', function (E)
 	for i,v in ipairs(users.users_table) do
 		if users.users_table[i].name == name then users.users_table[i].on_server = true end
 	end
-	print(inspect(users.users_table))
+--	print(inspect(users.users_table))
 end)
