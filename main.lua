@@ -31,5 +31,3 @@ for i,v in ipairs(config.plugins) do
 	local err = dofile(PLUGINS_PATH.."/"..v.."/main.lua")
 	if err ~= nil then print(string.format("[LuaMod] CORE: Plugin %s Failed to load with error: %s", v, err)) end
 end
-
-register_plugin(plugin_id.author, plugin_id.name, plugin_id.version, plugin_id.description)
