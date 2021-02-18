@@ -1,0 +1,8 @@
+{
+	"users": [
+		{ "name": "admin 1", "privilege": "admin", "method": "ip", "ip": "11.12.13.14", "password": "shit" },
+		{ "name": "admin 2", "privilege": "admin", "method": "authid", "authid": "VALVE_XASH_authid"},
+		{ "name": "admin 3", "privilege": "admin", "method": "authid", "authid": "VALVE_XASH_authid" },
+		{ "name": "admin 4", "privilege": "admin", "method": "ip", "ip":"111.222.33.44" }
+	]
+}
