@@ -5,12 +5,12 @@ local log = require("log").open("chat")
 
 engine_callback.register('pfnClientDisconnect', function (E)
 	engine.server_print(string.format('^6Player ^7%s^6 left the server\n', get_entity_keyvalue(E, "name")))
-	log:write("Player left the server - %s %s", get_entity_keyvalue(E, "name"), engine.get_player_authid(E))
+	log:write("Player left the server - %s %s %s", get_entity_keyvalue(E, "name"), engine.get_player_authid(E), get_entity_keyvalue(E, "ip"))
 end)
 
 engine_callback.register('pfnClientPutInServer', function (E)
 	engine.server_print(string.format('^6Player ^7%s^6 put in the server\n', get_entity_keyvalue(E, "name")))
-	log:write("Player put in the server - %s %s", get_entity_keyvalue(E, "name"), engine.get_player_authid(E))
+	log:write("Player put in the server - %s %s %s", get_entity_keyvalue(E, "name"), engine.get_player_authid(E), get_entity_keyvalue(E, "ip"))
 end)
 
 engine_callback.register('pfnClientConnect', function(E)
@@ -19,7 +19,7 @@ engine_callback.register('pfnClientConnect', function(E)
 	engine.write_string(string.format('Player %s^7 connecting to the server\n', get_entity_keyvalue(E, "name")))
 	engine.message_end()
 	engine.server_print(string.format('^6Player ^7%s^6 connecting to the server\n', get_entity_keyvalue(E, "name")))
-	log:write("Player connecting to the server - %s %s", get_entity_keyvalue(E, "name"), engine.get_player_authid(E))
+	log:write("Player connecting to the server - %s %s %s", get_entity_keyvalue(E, "name"), engine.get_player_authid(E), get_entity_keyvalue(E, "ip"))
 end)
 
 local function check_status()
