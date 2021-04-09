@@ -6,6 +6,7 @@ end
 
 function string.split(s, delimiter)
     result = {};
+    if s == nil then return result end
     for match in (s..delimiter):gmatch("(.-)"..delimiter) do
         table.insert(result, match);
     end
