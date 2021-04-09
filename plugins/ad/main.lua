@@ -12,9 +12,9 @@ end
 local function reporthelp_task()
 	engine.message_begin(2, say_text, {0,0,0}, 0)
 	engine.write_byte(0)
-	engine.write_string("Found unbanned cheater? Report to admin@arumoon.ru\n")
+	engine.write_string("Found unbanned cheater? Report at this email admin@arumoon.ru\n")
 	engine.message_end()
 end
 
 task.add(60, advert_task, task.infinite)
-task.add(150, reporthelp_task, task.infinite)
+task.add(90, reporthelp_task, task.infinite)
