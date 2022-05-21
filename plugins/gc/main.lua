@@ -1,20 +1,15 @@
 plugin.register("Mr0maks", "gc", "0.0.1", "garbage collector")
 
-local JSON = require("JSON")
-
-file_config = io.open(PLUGINS_PATH.."/gc/config.json", "r")
-local config = JSON:decode(file_config:read("*a"))
-file_config:close()
-
+local plugin_config = config.read("gc")
 local garbage = {}
 
 local log = log.open("gc")
 
-garbage.entities_list = config.entities
-garbage.count_to_collect = config.count
+garbage.entities_list = plugin_config.entities
+garbage.count_to_collect = plugin_config.count
 garbage.collected = 0
 -- seconds
-garbage.time = config.time
+garbage.time = plugin_config.time
 
 function garbage.collect()
 	local garbage_table = {}

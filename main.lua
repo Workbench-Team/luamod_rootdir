@@ -6,10 +6,18 @@ CORE_PATH = string.format("%s/addons/luamod", MOD_PATH)
 PACKAGE_PATH = string.format("%s/package", CORE_PATH)
 PLUGINS_PATH = string.format("%s/plugins", CORE_PATH)
 LOGS_PATH = string.format("%s/logs", CORE_PATH)
+CONFIGS_PATH = string.format("%s/configs", CORE_PATH)
 
 package.path = string.format("%s/?.lua;%s/?/init.lua;", PACKAGE_PATH, PACKAGE_PATH)
 
+dofile(CORE_PATH.."/config.lua")
+
+core_config = config.read("config")
+
 dofile(CORE_PATH.."/log.lua")
+
+core_log = log.open("core")
+
 dofile(CORE_PATH.."/metamod.lua")
 --dofile(PACKAGE_PATH.."/edict.lua")
 dofile(CORE_PATH.."/engine_callback.lua")
@@ -20,15 +28,9 @@ dofile(CORE_PATH.."/plugin.lua")
 
 plugin.register(plugin_id.author, plugin_id.name, plugin_id.version, plugin_id.description)
 
-local JSON = require("JSON")
-
-file_config = io.open(CORE_PATH.."/config.json", "r")
-config = JSON:decode(file_config:read("*a"))
-file_config:close()
-
 local inspect = require("inspect")
 
-for i,v in ipairs(config.plugins) do
+for i,v in ipairs(core_config.plugins) do
 	local err = dofile(PLUGINS_PATH.."/"..v.."/main.lua")
-	if err ~= nil then print(string.format("[LuaMod] CORE: Plugin %s Failed to load with error: %s", v, err)) end
+	if err ~= nil then print(string.format("[LuaMod] CORE: Plugin %s Failed to load with error: %s", v, err)); core_log:write(string.format("[LuaMod] CORE: Plugin %s Failed to load with error: %s", v, err)) end
 end

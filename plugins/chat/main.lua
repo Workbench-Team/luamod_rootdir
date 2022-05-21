@@ -6,12 +6,13 @@ end
 
 local globalvars = require("global_vars")
 local meta_global = require("metamod")
+local log = log.open("chat")
 
---Original value from hlsdk
-local chat_interval = 1.0
 local say_text = engine.reg_user_msg("SayText", -1);
 
-local player_next_chat_message = {}
+local chat_player_ratelimit = {}
+local chat_sliding_window_capacity = 10 -- 30 messages
+local chat_sliding_window_time_unit = 1 -- 1 sec
 
 cmd.register("client", "say", function (executor, args, split_args)
 	--[[Hook original Host_Say]]--
@@ -21,12 +22,19 @@ cmd.register("client", "say", function (executor, args, split_args)
 	if #args == 1 then return end
 
 	local name = get_entity_keyvalue(executor, 'name');
+	local id = engine.get_player_authid(executor);
 
-	if player_next_chat_message[name] > globalvars.time then
-		return
+	if globalvars.time - chat_player_ratelimit[name].time > chat_sliding_window_time_unit then
+		chat_player_ratelimit[name].time = globalvars.time
+		chat_player_ratelimit[name].previous_count = chat_player_ratelimit[name].current_count
+		chat_player_ratelimit[name].current_count = 0
 	end
 
-	player_next_chat_message[name] = globalvars.time + chat_interval
+	local ec = (chat_player_ratelimit[name].previous_count * (chat_sliding_window_time_unit - (globalvars.time - chat_player_ratelimit[name].time)) / chat_sliding_window_time_unit) + chat_player_ratelimit[name].current_count
+
+	if ec > chat_sliding_window_capacity then
+		return
+	end
 
 	local string_msg = string.format("%c[%s] %s: %s\n", 2, os.date("%X"), name, string.gsub(split_args, '"', ''));
 
@@ -35,6 +43,7 @@ cmd.register("client", "say", function (executor, args, split_args)
 	engine.write_string(string_msg);
 	engine.message_end();
 
+	log:write("%s %s: %s", id, name, split_args)
 	print(string_msg)
 end)
 
@@ -45,10 +54,10 @@ end)
 
 engine_callback.register('pfnClientPutInServer', function (E)
 	local name = get_entity_keyvalue(E, 'name');
-	player_next_chat_message[name] = 0
+	chat_player_ratelimit[name] = { time = globalvars.time, previous_count = 0, current_count = 0 }
 end)
 
 engine_callback.register('pfnClientDisconnect', function (E)
 	local name = get_entity_keyvalue(E, 'name');
-	player_next_chat_message[name] = nil
+	chat_player_ratelimit[name] = nil
 end)

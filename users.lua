@@ -1,13 +1,9 @@
 users = { users_table = {}, user = {} }
 
-local JSON = require("JSON")
 local inspect = require("inspect")
 
 local users_config = {}
-
-local file_config = io.open(CORE_PATH.."/users.json", "r")
-users_config.config = JSON:decode(file_config:read("*a")).users
-file_config:close()
+users_config.config = config.read("users").users
 
 local authentication_failed_msg = "Authentication failed!"
 
