@@ -8,7 +8,7 @@ file_config:close()
 
 local garbage = {}
 
-local log = require("log").open("gc")
+local log = log.open("gc")
 
 garbage.entities_list = config.entities
 garbage.count_to_collect = config.count

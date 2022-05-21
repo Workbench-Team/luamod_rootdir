@@ -1,6 +1,6 @@
 plugin.register("Professor Brain", "Chat Logger", "no version", "Logging chat messages to file")
 
-local log = require("log").open("chat")
+local log = log.open("chat")
 
 cmd.register("client", "say", function (E, table, args)
 	local name = get_entity_keyvalue(E, "name")

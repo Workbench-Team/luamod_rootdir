@@ -1,7 +1,7 @@
-local log = { debug_print = false }
+log = {}
 
 -- Log without any tag --
-function log.write(self, fmt, ...)
+local function log_write(self, fmt, ...)
 	local time = os.date("*t")
 	local str = string.format(fmt, ...)
 	local str2 = string.format("[%02i:%02i:%02i] %s\n", time.hour, time.min, time.sec, str)
@@ -12,7 +12,7 @@ function log.write(self, fmt, ...)
 end
 
 -- Log with DEBUG: tag --
-function log.debug(self, fmt, ...)
+local function log_debug(self, fmt, ...)
 	if self.debug_print == false then return end
 	local time = os.date("*t")
 	local str = string.format(fmt, ...)
@@ -24,7 +24,7 @@ function log.debug(self, fmt, ...)
 end
 
 -- Log with WARNING: tag --
-function log.warning(self, fmt, ...)
+local function log_warning(self, fmt, ...)
 	local time = os.date("*t")
 	local str = string.format(fmt, ...)
 	local str2 = string.format("[%02i:%02i:%02i] WARNING: %s\n", time.hour, time.min, time.sec, str)
@@ -35,7 +35,7 @@ function log.warning(self, fmt, ...)
 end
 
 -- Log WITH ERROR: tag and throw error --
-function log.error(self, fmt, ...)
+local function log_error(self, fmt, ...)
 	local time = os.date("*t")
 	local str = string.format(fmt, ...)
 	local str2 = string.format("[%02i:%02i:%02i] ERROR: %s\n", time.hour, time.min, time.sec, str)
@@ -46,15 +46,13 @@ function log.error(self, fmt, ...)
 	error(str)
 end
 
-function log.debug_allow(self, boolean)
+function log_debug_allow(self, boolean)
 	self.debug_print = true
 end
 
 function log.open(filename)
-	local local_table = log
+	local local_table = { write = log_write, debug = log_debug, warning = log_warning, error = log_error, debug_allow = log_debug_allow }
 	local_table.debug_print = false
 	local_table.filename = string.format("%s/%s", LOGS_PATH, filename)
 	return local_table
 end
-
-return log
