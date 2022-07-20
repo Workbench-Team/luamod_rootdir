@@ -11,7 +11,7 @@ local log = log.open("chat")
 local say_text = engine.reg_user_msg("SayText", -1);
 
 local chat_player_ratelimit = {}
-local chat_sliding_window_capacity = 10 -- 30 messages
+local chat_sliding_window_capacity = 3 -- 3 messages
 local chat_sliding_window_time_unit = 1 -- 1 sec
 
 cmd.register("client", "say", function (executor, args, split_args)
