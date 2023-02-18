@@ -1,6 +1,6 @@
 plugin.register("Mr0maks", "antiold", "no version", "kick 0.19.1 and older xash3d version")
 
-local log = log.open("antiold")
+local log = logger.open("antiold")
 
 engine_callback.register("pfnCvarValue2", function (E, id, cvar_name, cvar_value)
 	if cvar_name == 'host_build' and cvar_value < 1200 then

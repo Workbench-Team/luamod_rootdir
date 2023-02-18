@@ -16,7 +16,7 @@ core_config = config.read("config")
 
 dofile(CORE_PATH.."/log.lua")
 
-core_log = log.open("core")
+core_log = logger.open("core")
 
 dofile(CORE_PATH.."/metamod.lua")
 --dofile(PACKAGE_PATH.."/edict.lua")

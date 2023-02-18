@@ -6,7 +6,7 @@ end
 
 local globalvars = require("global_vars")
 local meta_global = require("metamod")
-local log = log.open("chat")
+local log = logger.open("chat")
 
 local say_text = engine.reg_user_msg("SayText", -1);
 

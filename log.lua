@@ -1,4 +1,4 @@
-log = {}
+logger = {}
 
 -- Log without any tag --
 local function log_write(self, fmt, ...)
@@ -50,7 +50,7 @@ function log_debug_allow(self, boolean)
 	self.debug_print = true
 end
 
-function log.open(filename)
+function logger.open(filename)
 	local local_table = { write = log_write, debug = log_debug, warning = log_warning, error = log_error, debug_allow = log_debug_allow }
 	local_table.debug_print = false
 	local_table.filename = string.format("%s/%s", LOGS_PATH, filename)

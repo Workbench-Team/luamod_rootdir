@@ -3,7 +3,7 @@ plugin.register("Mr0maks", "gc", "0.0.1", "garbage collector")
 local plugin_config = config.read("gc")
 local garbage = {}
 
-local log = log.open("gc")
+local log = logger.open("gc")
 
 garbage.entities_list = plugin_config.entities
 garbage.count_to_collect = plugin_config.count

@@ -1,7 +1,7 @@
 plugin.register("Aru Moon", "Players connection logs", "no version", "Players connection logs")
 
 local say_text = engine.reg_user_msg("SayText", -1)
-local log = log.open("players")
+local log = logger.open("players")
 
 engine_callback.register('pfnClientDisconnect', function (E)
 	engine.server_print(string.format('^6Player ^7%s^6 left the server\n', get_entity_keyvalue(E, "name")))
